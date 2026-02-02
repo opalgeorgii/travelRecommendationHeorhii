@@ -35,7 +35,7 @@ body {
 }
 
 header {
-    position: fixed;
+    position: sticky;  /* instead of fixed */
     width: 100%;
     top: 0;
     left: 0;
@@ -54,9 +54,18 @@ header nav {
     align-items: center;
     gap: 100px;
     background: linear-gradient(to right, #001800, #94bb94);
-    opacity: 0.9;
+    opacity: 0.95;
     height: 70px;
     padding: 0 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* subtle shadow */
+    transition: background 0.5s ease, transform 0.3s ease;
+}
+
+header nav > div,
+header nav ul,
+#searchBar {
+    flex-shrink: 1; /* items shrink if needed */
+    min-width: 0;   /* allows shrinking below content width */
 }
 
 header > nav > div {
@@ -122,7 +131,7 @@ a img {
 }
 
 input {
-    width: 300px;
+    width: 450px;
     height: 50px;
     border-radius: 100px;
 }
@@ -138,22 +147,27 @@ button {
     width: 70px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
 /* Search form styling - buttons inside input */
 #searchForm {
     position: relative;
-    display: inline-flex;
+    display: flex;      /* use flex instead of inline-flex */
     align-items: center;
+    max-width: 100%;    /* prevent overflow */
+    flex-grow: 1;       /* allow input to grow/shrink */
 }
 
 #searchInput {
-    width: 400px;
+    flex: 1;             /* input fills available space */
+    min-width: 200px;    /* won’t shrink too much */
+    max-width: 600px;    /* maximum size you want */
     height: 50px;
+    padding: 0 140px 0 50px; /* space for buttons on right */
     border-radius: 100px;
-    padding: 0 160px 0 50px; /* Left padding for icon, right padding for buttons */
+    font-size: 15px;      /* slightly bigger text */
     border: 1px solid #ccc;
-    font-size: 13px;
 }
 
 #searchInput::placeholder {
@@ -163,6 +177,17 @@ button {
 
 #searchInput:focus::placeholder {
     opacity: 1;
+}
+
+#searchInput:focus {
+    outline: none;
+    border: 2px solid #ffd700; /* gold border on focus */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#searchForm #search:hover, 
+#searchForm #reset:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 #searchForm img {
@@ -175,20 +200,23 @@ button {
 #searchForm #search,
 #searchForm #reset {
     position: absolute;
-    right: 5px;
+    right: 5px;          /* adjust for spacing */
     height: 30px;
-    padding: 0px;
-    font-size: 13px;
-    z-index: 2;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
 }
 
 #searchForm #search {
-    right: 80px; /* Position search button to the left of clear button */
+    position: absolute;
+    right: 80px; /* left of clear button */
+    height: 35px;
+    padding: 0;
 }
 
 #searchForm #reset {
+    position: absolute;
     right: 5px;
+    height: 35px;
+    padding: 0;
 }
 
 /* Prevent navigation links from wrapping */
@@ -196,13 +224,23 @@ header nav ul li {
     white-space: nowrap;
 }
 
+/* Logo hover effect */
+header a:hover img {
+    transform: rotate(-10deg) scale(1.1);
+    transition: transform 0.5s ease;
+}
+
 header nav ul li a {
+    font-size: 20px;      /* increase font size */
+    margin-right: 40px;   /* increase distance between links */
     white-space: nowrap;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
 
 header nav ul li a:hover {
-    color: #ffd700; /* Gold/yellow color on hover - change this to your preferred color */
+    color: #ffd700;
+    transform: scale(1.1);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 /* Prevent nav container from wrapping */
@@ -214,9 +252,8 @@ header > nav {
     max-width: 1920px;
     margin: 0 auto;
     min-width: 1200px; /* keeps layout from collapsing too much */
-    overflow-y: hidden; /* hide vertical scroll */
     position: relative;
-    overflow-x: auto;  /* enables horizontal scroll */
+    width: 100%;
 }
 
 /* Limit nav width on screens larger than 1920px to prevent gaps from growing */
@@ -247,6 +284,15 @@ header > nav {
     }
 }
 
+/* Hover effect for Search and Clear buttons */
+#searchForm #search:hover {
+    background-color: #000000; /* darker green on hover */
+}
+
+#searchForm #reset:hover {
+    background-color: #000000; /* dark red on hover */
+}
+
 
 /* Chrome, Safari, new Edge */
 #verticalLine::-webkit-scrollbar {
@@ -259,14 +305,9 @@ header > nav {
     top: 70px;          /* below header */
     left: 0;            /* at the start of the content */
     width: var(--side-rail-width);
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    overflow-y: hidden;
-    overflow-x: hidden;
-
     z-index: 100;
     padding-top: 30px;
     height: auto; /* let it expand to fit all icons */
