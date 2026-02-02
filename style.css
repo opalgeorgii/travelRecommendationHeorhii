@@ -228,10 +228,25 @@ header > nav {
 }
 
 @media (max-height: 700px) {
+    #verticalLine img {
+        width: 20px;      /* smaller icons */
+        margin: 5px 0;    /* reduce spacing between icons */
+    }
+
+    #verticalLine nav .vertical-line {
+        height: 100px;    /* shorter line above icons */
+        margin-bottom: 10px;
+    }
+    
     #verticalLine {
-        overflow-y: auto;
+        padding-top: 10px; /* reduce top padding */
+    }
+    
+    #verticalLine ul {
+        gap: 10px; /* smaller gap between icons */
     }
 }
+
 
 /* Chrome, Safari, new Edge */
 #verticalLine::-webkit-scrollbar {
@@ -243,18 +258,19 @@ header > nav {
     position: absolute; /* position relative to .page */
     top: 70px;          /* below header */
     left: 0;            /* at the start of the content */
-    height: calc(100vh - 70px);
     width: var(--side-rail-width);
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 
     z-index: 100;
     padding-top: 30px;
+    height: auto; /* let it expand to fit all icons */
+    min-height: calc(100vh - 70px); /* optional: at least viewport height */
 }
 
 
