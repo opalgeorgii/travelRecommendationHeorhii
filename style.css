@@ -1,10 +1,5 @@
 /* CSS reset + variables */
-:root {
-    --side-rail-width: 60px;
-    /* keep vertical line width */
-    --side-rail-gap: 40px;
-    /* smaller, fixed gap */
-}
+:root {}
 
 *,
 *::before,
@@ -15,6 +10,9 @@
 html {
     font-size: 100%;
     /* respect user settings */
+    scroll-padding-top: 4.5rem;
+    scroll-behavior: smooth;
+    /* Optional: makes the jump look nice and fluid */
 }
 
 body {
@@ -23,7 +21,6 @@ body {
     font-size: 1rem;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 500;
-    /* optional, keep text styling */
 
     /* Font color in body */
     color: white;
@@ -34,20 +31,38 @@ body {
     /* optional: makes background stay on scroll */
 }
 
+/* Fonts */
+input,
+button {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 /* Page container */
 .page {
     max-width: 1400px;
     margin: 0 auto;
     padding-inline: 2rem;
     width: 100%;
+    display: grid;
+    grid-template-columns: 0 1fr;
+    grid-template-rows: 0 1fr auto;
+    grid-template-areas:
+        ".     ."
+        /* Space reserved for fixed nav */
+        ".     main"
+        /* Space reserved for fixed aside | Main content */
+        ".     footer";
+    /* Space reserved for fixed aside | Footer content */
 }
 
 /* Header, navigation bar */
-header,
-nav {
-    width: 100%;
+header {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    /* This ensures the header is always on top */
 }
 
 nav {
@@ -57,11 +72,11 @@ nav {
     gap: clamp(1.5rem, 5vw, 5rem);
     opacity: 0.95;
     height: 4.5rem;
+    position: relative;
     padding-right: clamp(1rem, 2vw, 3rem);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    /* subtle shadow */
-
     background: linear-gradient(to right, #445607, #008080);
+    z-index: 100;
 }
 
 nav div a {
@@ -93,20 +108,82 @@ li a {
     font-weight: 700;
 }
 
-li a:hover,
 li a:focus {
     color: #ffd700;
     transform: scale(1.1);
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+#name:focus,
+#email:focus,
+#message:focus {
+    outline: 2px solid #ffd700;
+    /* Solid yellow outline */
+    outline-offset: 2px;
+    /* Creates a small gap between the field and the outline */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    /* Optional: yellow glow effect */
+    border-color: #ffd700;
+    /* Changes the border color to match */
+    font-size: 1rem;
+}
+
+/* Update 1: Navigation links and Search/Reset/Book buttons */
+li a:hover,
+li a:focus,
+/* Added focus */
+#bookNow:hover,
+#bookNow:focus,
+/* Added focus */
+#search:hover,
+#search:focus,
+/* Added focus */
+#reset:hover,
+#reset:focus,
+.btn-submit:hover,
+.btn-submit:focus {
+    /* Added focus */
+    color: #ffd700;
+    transform: scale(1.1);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    background: black;
+    outline: none;
+    transition: 0.3s all ease;
+    /* Removes default browser ring to use your custom scale/color effect */
+}
+
+aside li a:hover,
+aside li a:focus {
+    background: none;
+}
+
+/* Update 2: The white glow effect for the buttons */
+#search:hover,
+#search:focus,
+/* Added focus */
+#reset:hover,
+#reset:focus,
+/* Added focus */
+#bookNow:hover,
+#bookNow:focus {
+    /* Added focus */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
 /* Headings */
 h1 {
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-size: clamp(5rem, 4vw, 3.5rem);
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
 }
 
 h2 {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
+    margin: 0;
+    padding: 0;
 }
 
 h3 {
@@ -136,7 +213,7 @@ div>a>img {
 input {
     width: 28rem;
     height: 2.5rem;
-    border-radius: 3rem;
+    border-radius: 100px;
 }
 
 /* Search form styling - buttons inside input */
@@ -160,23 +237,45 @@ input {
 
 #searchInput {
     height: 3rem;
-    border-radius: 3rem;
+    border-radius: 100px;
     border: 1px solid #ccc;
     padding: 0 12rem 0 3rem;
+    font-size: 0.9rem;
 }
 
-#searchInput:focus {
+/* Ensure Contact inputs have the same base transition as the Search input */
+#name,
+#email {
+    transition: all 0.3s ease;
+    padding-inline: 1.5rem;
+    border: 1px solid #ccc;
+    /* Matches searchInput border */
+}
+
+#message {
+    padding-inline: 1rem;
+}
+
+#searchInput:focus,
+#name:focus,
+#email:focus,
+#message:focus {
     outline: none;
-    border: 2px solid #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }
 
-#searchInput::placeholder {
+#searchInput::placeholder,
+#name::placeholder,
+#email::placeholder,
+#message::placeholder {
     opacity: 0;
     transition: opacity 0.2s ease;
 }
 
-#searchInput:focus::placeholder {
+#searchInput:focus::placeholder,
+#name:focus::placeholder,
+#email:focus::placeholder,
+#message:focus::placeholder {
     opacity: 1;
 }
 
@@ -193,7 +292,8 @@ input {
 }
 
 #search:hover,
-#reset:hover {
+#reset:hover,
+#bookNow:hover {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
@@ -208,58 +308,235 @@ input {
 /* Buttons */
 .btn {
     background-color: #008080;
-    font-weight: 500;
-    border-radius: 3rem;
+    font-weight: 700;
+    border-radius: 100px;
     border: 1px solid #fff;
     width: 5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     text-align: center;
     color: white;
 }
 
-/* Hover effect for Book Now and Contact Submit buttons */
-.btn:hover,
-.btn-submit:hover {
-    background-color: #000000 !important;
-    /* Forces background to black */
-    color: #ffffff;
-    /* Ensures text stays white */
-    transition: background-color 0.3s ease;
-    /* Smooth color transition */
-    cursor: pointer;
+/* Vertical line with social media icons on the left side */
+aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    left: 2rem;
+    top: 4.5rem;
 }
 
+#vertical-line {
+    margin-block: 2.5rem;
+    height: 18rem;
+    width: 0.4rem;
+    background-color: white;
+    border-radius: 50px;
+}
+
+aside ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+}
+
+ul li {
+    list-style: none;
+    line-height: 0;
+}
+
+ul a {
+    display: block;
+}
+
+ul a:hover,
+aside a:focus {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+/* General Main Layout */
 main {
-    padding-top: 100px;
-    flex: 1;
-    /* main content takes remaining space */
-    margin-left: var(--side-rail-gap);
-    /* optional gap from sidebar */
+    padding-top: 4.5rem;
+    grid-area: main;
 }
 
-main,
+.content-section {
+    margin-block: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+hr {
+    border-radius: 50%;
+    height: 4px;
+    /* thickness */
+    width: 100%;
+    /* line width */
+    background: linear-gradient(to right, #445607, #008080);
+    /* line color */
+    margin-block: 2rem;
+    /* spacing */
+}
+
+.main-text {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    text-align: justify;
+}
+
+.box {
+    background: rgba(0, 0, 0, 0.45);
+    /* Transparent dark overlay */
+    padding: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-block: 1rem;
+    width: 100%;
+}
+
+#bookNow {
+    height: 2.2rem;
+    width: 6rem;
+    font-size: 1rem;
+}
+
+#aboutus .main-text,
+#aboutus h1 {
+    width: 100%;
+}
+
+#aboutus>div:nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 6rem;
+    justify-content: center;
+}
+
+.team-cards {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.team-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 18.9rem;
+
+    /* 1. Add transition here so the glow fades in AND out smoothly */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.team-card:hover {
+    /* 2. The Glow Effect: spread, blur, and color */
+    /* Adjust 'rgba(255, 215, 0, 0.6)' to match your theme (Gold or Teal) */
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2),
+        0 0 10px rgba(0, 128, 128, 0.5);
+
+    /* 3. Optional: Lift the card slightly to emphasize the glow */
+    transform: translateY(-5px);
+    z-index: 1;
+    /* 4. Brighten the background slightly */
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.role-tag {
+    display: block;
+    background: #407ebd;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.role-tag:hover {
+    background: #000000;
+    transition: all 0.3s ease;
+}
+
+#contactus {
+    flex-direction: row;
+}
+
+#contactus .main-text {
+    width: 50%;
+}
+
+form.box {
+    background: rgba(0, 0, 0, 0.45);
+    /* Transparent dark overlay */
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-block: auto;
+    width: 50%;
+}
+
+form.box {
+    width: 60%;
+    /* Increased from 50% for a better look */
+    padding: 2rem;
+    /* Give the internal elements some breathing room */
+}
+
+#name,
+#email,
+textarea {
+    width: 100%;
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form-group {
+    padding-inline: 0;
+}
+
+/* Optional: Make the labels ("Name", "Email") match the size */
+.form-group label {
+    display: block;
+    margin-block: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 1.5rem;
+    /* Increases label font size */
+}
+
+textarea {
+    resize: none;
+    box-sizing: border-box;
+    padding: 1rem;
+    /* Prevents all manual resizing */
+    overflow: auto;
+    /* Adds a scrollbar only if the text exceeds the height */
+    width: 100%;
+    /* Optional: Set a specific height and width since it's now fixed */
+    min-height: 200px;
+    border-radius: 10px;
+}
+
+.btn-submit {
+    width: 5rem;
+    background-color: #008080;
+    margin-top: 1.5rem;
+    height: 2rem;
+    text-align: center;
+}
+
 footer {
-    margin-left: calc(var(--side-rail-width) + var(--side-rail-gap));
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-    /* Clean, modern travel vibe */
-}
-
-/* Force all child elements (headings, buttons, inputs) to use the new font */
-main h1,
-main h2,
-main h3,
-main p,
-main button,
-main input,
-main textarea,
-footer p,
-footer a {
-    font-family: inherit;
-}
-
-footer {
-    max-width: 1200px;
+    grid-area: footer;
     /* optional, limits footer width */
     margin: 0 auto;
     /* centers footer horizontally */
@@ -267,302 +544,4 @@ footer {
     /* centers text inside footer */
     padding: 20px 0;
     /* optional spacing */
-}
-
-/* Limit nav width on screens larger than 1920px to prevent gaps from growing */
-@media (min-width: 1921px) {
-    header>nav {
-        max-width: 1920px;
-        margin: 0 auto;
-    }
-}
-
-@media (max-height: 700px) {
-    #verticalLine img {
-        width: 30px;
-        /* smaller icons */
-        margin: 5px 0;
-        /* reduce spacing between icons */
-    }
-
-    #verticalLine nav .vertical-line {
-        height: 100px;
-        /* shorter line above icons */
-        margin-bottom: 10px;
-    }
-
-    #verticalLine {
-        padding-top: 10px;
-        /* reduce top padding */
-    }
-
-    #verticalLine ul {
-        gap: 10px;
-        /* smaller gap between icons */
-    }
-}
-
-/* Chrome, Safari, new Edge */
-#verticalLine::-webkit-scrollbar {
-    display: none;
-}
-
-/* Vertical line with social media icons on the left side */
-#verticalLine {
-    position: sticky;
-    top: 70px;
-    /* Sticks right below your 70px header */
-    left: 0;
-    width: var(--side-rail-width);
-
-    /* This is the key: it allows the sidebar to sit on the left 
-       without pushing the 'main' content below it */
-    float: left;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 100;
-    padding-top: 30px;
-
-    /* Stickiness needs a height to live in, but not 100vh 
-       or it will create a massive empty gap at the bottom */
-    height: max-content;
-}
-
-
-#verticalLine nav {
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Vertical line above icons */
-#verticalLine nav .vertical-line {
-    width: 7px;
-    height: 300px;
-    border-radius: 20px;
-    background-color: #00803c;
-    margin-bottom: 20px;
-}
-
-
-
-#verticalLine ul {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
-    align-items: center;
-}
-
-#verticalLine li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#verticalLine a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    transition: transform 0.3s ease;
-}
-
-#verticalLine img {
-    width: 40px;
-    display: block;
-    margin: 0 auto;
-}
-
-#verticalLine a:hover {
-    transform: scale(1.2);
-}
-
-/* General Main Layout */
-main {
-    padding-top: 120px;
-    padding-bottom: 50px;
-    min-height: 100vh;
-}
-
-.glass-box {
-    background: rgba(0, 0, 0, 0.45);
-    /* Transparent dark overlay */
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 50px;
-    margin-right: 20px;
-}
-
-
-/* Home Section Styles */
-.hero-section h1 {
-    font-size: 80px;
-    line-height: 1;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-}
-
-.hero-section p {
-    max-width: 400px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    text-align: justify;
-}
-
-.glass-box p {
-    text-align: justify;
-}
-
-/* About Us & Team Styles */
-.team-grid {
-    display: flex;
-    gap: 20px;
-    justify-content: flex-start;
-    margin-top: 20px;
-}
-
-.team-card {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 8px;
-    flex: 1;
-    max-width: 300px;
-}
-
-.icon-circle {
-    background: #2c3e50;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-.role-tag {
-    display: block;
-    background: #407ebd;
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-size: 12px;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.role-tag:hover {
-    background: #2752e9;
-    transition: all 0.3s ease;
-}
-
-/* Contact Us Section */
-.contact-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.contact-form {
-    width: 50%;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-/* Optional: Make the labels ("Name", "Email") match the size */
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 20px;
-    /* Increases label font size */
-}
-
-
-/* Update the existing contact-form input/textarea block */
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    background: transparent;
-    border: 1px solid white;
-    color: white;
-    padding: 10px;
-    /* Increased padding for better vertical spacing */
-    border-radius: 10px;
-    font-size: 20px;
-    /* Makes the typed text larger */
-}
-
-.contact-form textarea {
-    height: 250px;
-    /* Increased height (adjust as needed) */
-    resize: none;
-    /* Disables the user's ability to resize the box */
-    padding-top: 15px;
-    /* Adds a little extra space at the top for the larger font */
-}
-
-.btn-submit {
-    width: 100%;
-    background-color: #008080;
-    margin-top: 20px;
-    height: 45px;
-}
-
-/* Update the placeholder text size */
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-    color: white;
-    opacity: 0.8;
-    font-size: 20px;
-    /* Makes the placeholder text larger */
-}
-
-/* Ensure cross-browser compatibility for larger placeholder */
-.contact-form input::-webkit-input-placeholder,
-.contact-form textarea::-webkit-input-placeholder {
-    color: white;
-    font-size: 20px;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border: 1px solid #ffd700;
-    /* Gold border when clicking into the field */
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.contact-text h1 {
-    /* Use a heavy sans-serif font */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 100px;
-    /* Significant size increase */
-    font-weight: 900;
-    /* Maximum boldness */
-    line-height: 1.8;
-    /* Tighten line spacing like the image */
-    letter-spacing: 2px;
-    /* Pull letters closer for that heavy feel */
-    text-transform: uppercase;
-    color: white;
-    margin: 0;
-    text-wrap: nowrap;
-}
-
-.contact-text p {
-    font-size: 28px;
-    margin-top: 0px;
-    opacity: 0.9;
-    margin-left: 10px;
-    /* Slightly softer than the heading */
 }
