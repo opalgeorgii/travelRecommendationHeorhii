@@ -9,6 +9,11 @@
     box-sizing: border-box;
 }
 
+/* Header, navigation bar */
+
+
+
+
 /* Create a semi-transparent overlay */
 body::before {
     content: '';
@@ -87,6 +92,8 @@ div > ul {
 
 main {
     padding-top: 100px;
+    flex: 1; /* main content takes remaining space */
+    margin-left: var(--side-rail-gap); /* optional gap from sidebar */
 }
 
 main,
@@ -571,5 +578,5 @@ main {
     font-size: 28px;
     margin-top: 0px;
     opacity: 0.9;      
-    margin-left: 5px;     /* Slightly softer than the heading */
+    margin-left: 10px;     /* Slightly softer than the heading */
 }
