@@ -1,138 +1,173 @@
+/* CSS reset + variables */
 :root {
-    --side-rail-width: 60px; /* keep vertical line width */
-    --side-rail-gap: 40px;   /* smaller, fixed gap */
+    --side-rail-width: 60px;
+    /* keep vertical line width */
+    --side-rail-gap: 40px;
+    /* smaller, fixed gap */
 }
 
-* {
-    margin: 0;
-    padding: 0;
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-/* Header, navigation bar */
-
-
-
-
-/* Create a semi-transparent overlay */
-body::before {
-    content: '';
-    position: fixed;  /* covers the viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* black overlay at 50% opacity */
-    z-index: -1; /* behind content */
+html {
+    font-size: 100%;
+    /* respect user settings */
 }
 
 body {
-    overflow-x: auto;
-    min-width: 320px; /* optional minimum width */
-    /* Background image */
-    background-image: url('./images/background.jpg'); /* replace with your file path */
-    background-size: cover;       /* makes image cover entire body */
-    background-position: center;  /* center the image */
-    background-repeat: no-repeat; /* avoid repeating the image */
-    background-attachment: fixed; /* optional: makes background stay on scroll */
+    margin: 0;
+    line-height: 1.6;
+    font-size: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+    /* optional, keep text styling */
+
+    /* Font color in body */
     color: white;
-    font-family: Arial, Helvetica, sans-serif; /* optional, keep text styling */
+
+    /* Background image */
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url('./images/background.jpg') center/cover no-repeat;
+    background-attachment: fixed;
+    /* optional: makes background stay on scroll */
 }
 
-header {
-    position: sticky;  /* instead of fixed */
+/* Page container */
+.page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-inline: 2rem;
     width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
 }
 
-header a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+/* Header, navigation bar */
+header,
+nav {
+    width: 100%;
+    position: fixed;
+    inset: 0;
 }
 
-header nav {
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 100px;
-    background: linear-gradient(to right, #445607, #008080);
+    gap: clamp(1.5rem, 5vw, 5rem);
     opacity: 0.95;
-    height: 70px;
-    padding: 0 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* subtle shadow */
-    transition: background 0.5s ease, transform 0.3s ease;
-    min-width: max-content; /* Forces the background to span the full width of the items */
-    width: 100%;           /* Keeps it full width on large screens */
+    height: 4.5rem;
+    padding-right: clamp(1rem, 2vw, 3rem);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    /* subtle shadow */
+
+    background: linear-gradient(to right, #445607, #008080);
 }
 
-header nav > div,
-header nav ul,
-#searchBar {
-    flex-shrink: 0; /* items shrink if needed */
-    min-width: 0;   /* allows shrinking below content width */
-}
-
-header > nav > div {
-    align-items: center;
+nav div a {
     display: flex;
-    white-space: nowrap;
-    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-div > ul {
+nav>div:first-child {
+    margin-left: 1rem;
+}
+
+/* Logo hover effect */
+nav a:hover img {
+    transform: rotate(-15deg) scale(1.1);
+    transition: transform 0.5s ease;
+}
+
+div>ul {
     display: flex;
     list-style: none;
-    gap: 25px;
-    white-space: nowrap;
     flex-wrap: nowrap;
+    gap: 5rem;
+}
+
+li a {
+    white-space: nowrap;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+    font-weight: 700;
+}
+
+li a:hover {
+    color: #ffd700;
+    transform: scale(1.1);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Headings */
+h1 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+h3 {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+}
+
+a>span {
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Images */
+div>a>img {
+    width: 3rem;
 }
 
 main {
     padding-top: 100px;
-    flex: 1; /* main content takes remaining space */
-    margin-left: var(--side-rail-gap); /* optional gap from sidebar */
+    flex: 1;
+    /* main content takes remaining space */
+    margin-left: var(--side-rail-gap);
+    /* optional gap from sidebar */
 }
 
 main,
 footer {
     margin-left: calc(var(--side-rail-width) + var(--side-rail-gap));
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif; /* Clean, modern travel vibe */
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    /* Clean, modern travel vibe */
 }
 
 /* Force all child elements (headings, buttons, inputs) to use the new font */
-main h1, main h2, main h3, main p, 
-main button, main input, main textarea,
-footer p, footer a {
+main h1,
+main h2,
+main h3,
+main p,
+main button,
+main input,
+main textarea,
+footer p,
+footer a {
     font-family: inherit;
 }
 
 footer {
-    max-width: 1200px;      /* optional, limits footer width */
-    margin: 0 auto;         /* centers footer horizontally */
-    text-align: center;     /* centers text inside footer */
-    padding: 20px 0;        /* optional spacing */
-}
-
-a {
-    text-decoration: none;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 17px;
-}
-
-a > span {
-    font-size: 30px;
-    font-family: 'Courier New', Courier, monospace;
-    font-style: italic;
-    white-space: nowrap;
-}
-
-a img {
-    width: 40px;
-    margin-left: 20px;
+    max-width: 1200px;
+    /* optional, limits footer width */
+    margin: 0 auto;
+    /* centers footer horizontally */
+    text-align: center;
+    /* centers text inside footer */
+    padding: 20px 0;
+    /* optional spacing */
 }
 
 .sr-only {
@@ -170,20 +205,28 @@ button {
 /* Search form styling - buttons inside input */
 #searchForm {
     position: relative;
-    display: flex;      /* use flex instead of inline-flex */
+    display: flex;
+    /* use flex instead of inline-flex */
     align-items: center;
-    max-width: 100%;    /* prevent overflow */
-    flex-grow: 1;       /* allow input to grow/shrink */
+    max-width: 100%;
+    /* prevent overflow */
+    flex-grow: 1;
+    /* allow input to grow/shrink */
 }
 
 #searchInput {
-    flex: 1;             /* input fills available space */
-    min-width: 200px;    /* won’t shrink too much */
-    max-width: 600px;    /* maximum size you want */
+    flex: 1;
+    /* input fills available space */
+    min-width: 200px;
+    /* won’t shrink too much */
+    max-width: 600px;
+    /* maximum size you want */
     height: 50px;
-    padding: 0 170px 0 50px; /* space for buttons on right */
+    padding: 0 170px 0 50px;
+    /* space for buttons on right */
     border-radius: 100px;
-    font-size: 15px;      /* slightly bigger text */
+    font-size: 15px;
+    /* slightly bigger text */
     border: 1px solid #ccc;
 }
 
@@ -198,11 +241,12 @@ button {
 
 #searchInput:focus {
     outline: none;
-    border: 2px solid #ffd700; /* gold border on focus */
+    border: 2px solid #ffd700;
+    /* gold border on focus */
     box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
-#searchForm #search:hover, 
+#searchForm #search:hover,
 #searchForm #reset:hover {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
@@ -217,14 +261,16 @@ button {
 #searchForm #search,
 #searchForm #reset {
     position: absolute;
-    right: 5px;          /* adjust for spacing */
+    right: 5px;
+    /* adjust for spacing */
     height: 30px;
     padding: 0 15px;
 }
 
 #searchForm #search {
     position: absolute;
-    right: 80px; /* left of clear button */
+    right: 80px;
+    /* left of clear button */
     height: 35px;
     padding: 0;
 }
@@ -236,47 +282,9 @@ button {
     padding: 0;
 }
 
-/* Prevent navigation links from wrapping */
-header nav ul li {
-    white-space: nowrap;
-}
-
-/* Logo hover effect */
-header a:hover img {
-    transform: rotate(-10deg) scale(1.1);
-    transition: transform 0.5s ease;
-}
-
-header nav ul li a {
-    font-size: 20px;      /* increase font size */
-    margin-right: 40px;   /* increase distance between links */
-    white-space: nowrap;
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-    font-weight: 700;
-}
-
-header nav ul li a:hover {
-    color: #ffd700;
-    transform: scale(1.1);
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-/* Prevent nav container from wrapping */
-header > nav {
-    flex-wrap: nowrap;
-}
-
-.page {
-    max-width: 1920px;
-    margin: 0 auto;
-    min-width: 1200px; /* keeps layout from collapsing too much */
-    position: relative;
-    width: 100%;
-}
-
 /* Limit nav width on screens larger than 1920px to prevent gaps from growing */
-@media (min-width: 1921px) { 
-    header > nav {
+@media (min-width: 1921px) {
+    header>nav {
         max-width: 1920px;
         margin: 0 auto;
     }
@@ -284,31 +292,38 @@ header > nav {
 
 @media (max-height: 700px) {
     #verticalLine img {
-        width: 30px;      /* smaller icons */
-        margin: 5px 0;    /* reduce spacing between icons */
+        width: 30px;
+        /* smaller icons */
+        margin: 5px 0;
+        /* reduce spacing between icons */
     }
 
     #verticalLine nav .vertical-line {
-        height: 100px;    /* shorter line above icons */
+        height: 100px;
+        /* shorter line above icons */
         margin-bottom: 10px;
     }
-    
+
     #verticalLine {
-        padding-top: 10px; /* reduce top padding */
+        padding-top: 10px;
+        /* reduce top padding */
     }
-    
+
     #verticalLine ul {
-        gap: 10px; /* smaller gap between icons */
+        gap: 10px;
+        /* smaller gap between icons */
     }
 }
 
 /* Hover effect for Search and Clear buttons */
 #searchForm #search:hover {
-    background-color: #000000; /* darker green on hover */
+    background-color: #000000;
+    /* darker green on hover */
 }
 
 #searchForm #reset:hover {
-    background-color: #000000; /* dark red on hover */
+    background-color: #000000;
+    /* dark red on hover */
 }
 
 
@@ -319,24 +334,25 @@ header > nav {
 
 /* Vertical line with social media icons on the left side */
 #verticalLine {
-    position: sticky; 
-    top: 70px; /* Sticks right below your 70px header */
+    position: sticky;
+    top: 70px;
+    /* Sticks right below your 70px header */
     left: 0;
     width: var(--side-rail-width);
-    
+
     /* This is the key: it allows the sidebar to sit on the left 
        without pushing the 'main' content below it */
-    float: left; 
-    
+    float: left;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 100;
     padding-top: 30px;
-    
+
     /* Stickiness needs a height to live in, but not 100vh 
        or it will create a massive empty gap at the bottom */
-    height: max-content; 
+    height: max-content;
 }
 
 
@@ -401,7 +417,8 @@ main {
 }
 
 .glass-box {
-    background: rgba(0, 0, 0, 0.45); /* Transparent dark overlay */
+    background: rgba(0, 0, 0, 0.45);
+    /* Transparent dark overlay */
     padding: 30px;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -442,9 +459,12 @@ main {
 /* Hover effect for Book Now and Contact Submit buttons */
 .btn-primary:hover,
 .btn-submit:hover {
-    background-color: #000000 !important; /* Forces background to black */
-    color: #ffffff;                       /* Ensures text stays white */
-    transition: background-color 0.3s ease; /* Smooth color transition */
+    background-color: #000000 !important;
+    /* Forces background to black */
+    color: #ffffff;
+    /* Ensures text stays white */
+    transition: background-color 0.3s ease;
+    /* Smooth color transition */
     cursor: pointer;
 }
 
@@ -509,26 +529,32 @@ main {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    font-size: 20px;    /* Increases label font size */
+    font-size: 20px;
+    /* Increases label font size */
 }
 
 
 /* Update the existing contact-form input/textarea block */
-.contact-form input, 
+.contact-form input,
 .contact-form textarea {
     width: 100%;
     background: transparent;
     border: 1px solid white;
     color: white;
-    padding: 10px;      /* Increased padding for better vertical spacing */
+    padding: 10px;
+    /* Increased padding for better vertical spacing */
     border-radius: 10px;
-    font-size: 20px;    /* Makes the typed text larger */
+    font-size: 20px;
+    /* Makes the typed text larger */
 }
 
 .contact-form textarea {
-    height: 250px;      /* Increased height (adjust as needed) */
-    resize: none;       /* Disables the user's ability to resize the box */
-    padding-top: 15px;  /* Adds a little extra space at the top for the larger font */
+    height: 250px;
+    /* Increased height (adjust as needed) */
+    resize: none;
+    /* Disables the user's ability to resize the box */
+    padding-top: 15px;
+    /* Adds a little extra space at the top for the larger font */
 }
 
 .btn-submit {
@@ -543,7 +569,8 @@ main {
 .contact-form textarea::placeholder {
     color: white;
     opacity: 0.8;
-    font-size: 20px;    /* Makes the placeholder text larger */
+    font-size: 20px;
+    /* Makes the placeholder text larger */
 }
 
 /* Ensure cross-browser compatibility for larger placeholder */
@@ -553,10 +580,11 @@ main {
     font-size: 20px;
 }
 
-.contact-form input:focus, 
+.contact-form input:focus,
 .contact-form textarea:focus {
     outline: none;
-    border: 1px solid #ffd700; /* Gold border when clicking into the field */
+    border: 1px solid #ffd700;
+    /* Gold border when clicking into the field */
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
     transition: all 0.3s ease;
 }
@@ -564,10 +592,14 @@ main {
 .contact-text h1 {
     /* Use a heavy sans-serif font */
     font-family: 'Montserrat', sans-serif;
-    font-size: 100px;       /* Significant size increase */
-    font-weight: 900;       /* Maximum boldness */
-    line-height: 1.8;       /* Tighten line spacing like the image */
-    letter-spacing: 2px;   /* Pull letters closer for that heavy feel */
+    font-size: 100px;
+    /* Significant size increase */
+    font-weight: 900;
+    /* Maximum boldness */
+    line-height: 1.8;
+    /* Tighten line spacing like the image */
+    letter-spacing: 2px;
+    /* Pull letters closer for that heavy feel */
     text-transform: uppercase;
     color: white;
     margin: 0;
@@ -577,6 +609,7 @@ main {
 .contact-text p {
     font-size: 28px;
     margin-top: 0px;
-    opacity: 0.9;      
-    margin-left: 10px;     /* Slightly softer than the heading */
+    opacity: 0.9;
+    margin-left: 10px;
+    /* Slightly softer than the heading */
 }
