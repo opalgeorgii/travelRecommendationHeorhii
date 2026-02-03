@@ -59,17 +59,15 @@ header nav {
     padding: 0 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* subtle shadow */
     transition: background 0.5s ease, transform 0.3s ease;
+    min-width: max-content; /* Forces the background to span the full width of the items */
+    width: 100%;           /* Keeps it full width on large screens */
 }
 
 header nav > div,
 header nav ul,
 #searchBar {
-    flex-shrink: 1; /* items shrink if needed */
-    min-width: 0;   /* allows shrinking below content width */
-}
-
-#searchBar {
     flex-shrink: 0; /* items shrink if needed */
+    min-width: 0;   /* allows shrinking below content width */
 }
 
 header > nav > div {
@@ -403,22 +401,6 @@ main {
     color: white;
     /* Apply the animation */
     animation: glowPulse 5s infinite;
-}
-
-/* Keyframes for pulsing glow */
-@keyframes glowPulse {
-    0%, 100% {
-        text-shadow: none; /* normal state */
-        color: white;
-    }
-    50% {
-        text-shadow: 
-            0 0 10px #ffd700,
-            0 0 20px #ffd700,
-            0 0 30px #ffd700,
-            0 0 40px #ffa500;
-        color: #fffacd; /* optional glowing color */
-    }
 }
 
 .hero-section p {
