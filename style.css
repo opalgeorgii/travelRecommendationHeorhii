@@ -166,7 +166,7 @@ button {
     min-width: 200px;    /* won’t shrink too much */
     max-width: 600px;    /* maximum size you want */
     height: 50px;
-    padding: 0 140px 0 50px; /* space for buttons on right */
+    padding: 0 170px 0 50px; /* space for buttons on right */
     border-radius: 100px;
     font-size: 15px;      /* slightly bigger text */
     border: 1px solid #ccc;
