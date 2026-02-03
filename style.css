@@ -269,7 +269,7 @@ header > nav {
 
 @media (max-height: 700px) {
     #verticalLine img {
-        width: 20px;      /* smaller icons */
+        width: 30px;      /* smaller icons */
         margin: 5px 0;    /* reduce spacing between icons */
     }
 
@@ -304,17 +304,24 @@ header > nav {
 
 /* Vertical line with social media icons on the left side */
 #verticalLine {
-    position: absolute; /* position relative to .page */
-    top: 70px;          /* below header */
-    left: 0;            /* at the start of the content */
+    position: sticky; 
+    top: 70px; /* Sticks right below your 70px header */
+    left: 0;
     width: var(--side-rail-width);
+    
+    /* This is the key: it allows the sidebar to sit on the left 
+       without pushing the 'main' content below it */
+    float: left; 
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 100;
     padding-top: 30px;
-    height: auto; /* let it expand to fit all icons */
-    min-height: calc(100vh - 70px); /* optional: at least viewport height */
+    
+    /* Stickiness needs a height to live in, but not 100vh 
+       or it will create a massive empty gap at the bottom */
+    height: max-content; 
 }
 
 
@@ -360,7 +367,7 @@ header > nav {
 }
 
 #verticalLine img {
-    width: 30px;
+    width: 40px;
     display: block;
     margin: 0 auto;
 }
